@@ -1,4 +1,4 @@
-cpu_count=$(shell python -c 'import multiprocessing as m; print m.cpu_count()')
+cpu_count=$(shell python -c 'import multiprocessing as m; print(m.cpu_count())')
 
 nose_env=
 ifndef NOSE_PROCESSES
@@ -7,10 +7,12 @@ endif
 
 cmake_args=
 cmake_env=
-ifdef VIRTUAL_ENV
-	cmake_args+=-DCMAKE_INSTALL_PREFIX=$(VIRTUAL_ENV)
-	cmake_env+=CMAKE_PREFIX_PATH=$(VIRTUAL_ENV)
-endif
+# ifdef VIRTUAL_ENV
+# 	cmake_args+=-DCMAKE_INSTALL_PREFIX=$(VIRTUAL_ENV)
+# 	cmake_env+=CMAKE_PREFIX_PATH=$(VIRTUAL_ENV)
+# endif
+cmake_args+=-DCMAKE_INSTALL_PREFIX=/usr/local/google/home/emilyaf/posterior_loom
+cmake_env+=CMAKE_PREFIX_PATH=/usr/local/google/home/emilyaf/posterior_loom
 cmake = $(cmake_env) cmake $(cmake_args)
 
 all: debug release

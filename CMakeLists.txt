@@ -22,7 +22,11 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -DNDEBUG=1")
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
 # germ of a future FindDistributions.cmake
-find_path(DISTRIBUTIONS_INCLUDE_DIR distributions/random.hpp)
+set(CMAKE_PREFIX_PATH "/usr/local/google/home/emilyaf/posterior_loom/distributions/include")
+
+find_path(
+  DISTRIBUTIONS_INCLUDE_DIR 
+  NAMES "distributions/random.hpp")
 if(NOT DISTRIBUTIONS_INCLUDE_DIR)
   message(FATAL_ERROR
     "distributions include dir not found, try setting CMAKE_PREFIX_PATH")
@@ -34,10 +38,10 @@ endif()
 message("BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 message("PREFIX_PATH = ${CMAKE_PREFIX_PATH}")
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-  find_library(DISTRIBUTIONS_LIBRARIES distributions_shared_release)
+  find_library(DISTRIBUTIONS_LIBRARIES distributions_shared_release /usr/local/google/home/emilyaf/.virtualenvs/loom/lib/)
 else()
   set(CMAKE_EXECUTABLE_SUFFIX "_debug")
-  find_library(DISTRIBUTIONS_LIBRARIES distributions_shared_debug)
+  find_library(DISTRIBUTIONS_LIBRARIES distributions_shared_debug /usr/local/google/home/emilyaf/.virtualenvs/loom/lib/)
 endif()
 
 if(DISTRIBUTIONS_LIBRARIES)
